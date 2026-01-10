@@ -1,4 +1,4 @@
-// database.js
+// database.js (ES Module)
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -18,101 +18,113 @@ const firebaseConfig = {
 // 🔷 Inițializează Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const istoricRef = ref(db, 'istoric');
+const istoricRef = ref(db, "istoric");
 
-// 🔷 Calculează scorurile
-function calculeazaScoruri(data, zile = null) {
+const AVATAR_SRC = "assets/images/avatar-01.jpg";
+const VBUCKS_ICON_URL = "https://static.wikia.nocookie.net/fortnite/images/e/eb/V-Bucks_-_Icon_-_Fortnite.png";
+
+// 🔷 Calculează scorurile (All-Time sau ultimele X luni)
+// IMPORTANT: ca în codul tău inițial, „Ultimele 6 luni” = setMonth(-6)
+function calculeazaScoruri(data, luniInUrma = null) {
     const azi = new Date();
-    const scoruri = {};
-
     let limitaData = null;
-    if (zile) {
-        limitaData = new Date();
-        limitaData.setMonth(azi.getMonth() - 3); // 3 luni în urmă
+
+    if (luniInUrma) {
+        limitaData = new Date(azi);
+        limitaData.setMonth(azi.getMonth() - 6); // identic cu comportamentul anterior
     }
 
-    Object.values(data).forEach(entry => {
-        const [year, month, day] = entry.data.split('-');
-        const entryDate = new Date(year, month - 1, day);
+    const scoruri = Object.create(null);
 
-        if (limitaData && entryDate < limitaData) {
-            return; // ignoră dacă e mai vechi de 3 luni
-        }
+    for (const entry of Object.values(data)) {
+        if (!entry || !entry.data || !entry.nume || !entry.tip) continue;
+
+        const parts = String(entry.data).split("-");
+        if (parts.length !== 3) continue;
+
+        const [year, month, day] = parts.map(Number);
+        const entryDate = new Date(year, (month || 1) - 1, day || 1);
+
+        if (limitaData && entryDate < limitaData) continue;
 
         const nume = entry.nume;
         const tip = entry.tip;
-        const valoare = parseInt(entry.valoare) || 0;
+        const valoare = parseInt(entry.valoare, 10) || 0;
 
-        if (!scoruri[nume]) scoruri[nume] = 0;
-        scoruri[nume] += tip === 'shop' ? valoare : -valoare;
-    });
+        if (scoruri[nume] == null) scoruri[nume] = 0;
+        scoruri[nume] += (tip === "shop") ? valoare : -valoare;
+    }
 
     return Object.entries(scoruri).sort((a, b) => b[1] - a[1]);
 }
 
-// 🔷 Afișează lista cu stele ⭐
-function afiseazaTop(listaId, sortat) {
-    const lista = document.getElementById(listaId);
-    lista.innerHTML = '';
-
-    sortat.forEach(([nume, puncte], index) => {
-        let emoji = "⭐";
-        if (index === 0) emoji = "🥇";
-        else if (index === 1) emoji = "🥈";
-        else if (index === 2) emoji = "🥉";
-
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <span>${String(index + 1).padStart(2, '0')}</span>
-            <div class="info">
-                <img src="assets/images/avatar-01.jpg" alt="">
-                <h6><i class="fa fa-check"></i> ${nume}</h6>
-            </div>
-            <div class="points">${puncte} ${emoji}</div>
-        `;
-        lista.appendChild(li);
-    });
+function medalEmoji(index) {
+    if (index === 0) return "🥇";
+    if (index === 1) return "🥈";
+    if (index === 2) return "🥉";
+    return "⭐";
 }
 
-// 🔷 Afișează lista cu V-Bucks 💎
+// 🔷 Afișează lista ⭐
+function afiseazaTop(listaId, sortat) {
+    const lista = document.getElementById(listaId);
+    if (!lista) return;
+
+    lista.innerHTML = "";
+    const frag = document.createDocumentFragment();
+
+    sortat.forEach(([nume, puncte], index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+      <span>${String(index + 1).padStart(2, "0")}</span>
+      <div class="info">
+        <img src="${AVATAR_SRC}" alt="">
+        <h6><i class="fa fa-check"></i> ${nume}</h6>
+      </div>
+      <div class="points">${puncte} ${medalEmoji(index)}</div>
+    `;
+        frag.appendChild(li);
+    });
+
+    lista.appendChild(frag);
+}
+
+// 🔷 Afișează lista 💎 V-Bucks
 function afiseazaTopVbucks(listaId, sortat) {
     const lista = document.getElementById(listaId);
-    lista.innerHTML = '';
+    if (!lista) return;
+
+    lista.innerHTML = "";
+    const frag = document.createDocumentFragment();
 
     const top10 = sortat.slice(0, 10);
-    const totalPuncte = top10.reduce((acc, [_, puncte]) => acc + puncte, 0) || 1;
+    const totalPuncte = top10.reduce((acc, [, puncte]) => acc + puncte, 0) || 1;
     const totalVbucks = 15000;
 
-    // valorile permise
     const valoriPermise = [200, 300, 500, 600, 800, 1200, 1500, 2000, 3000];
 
     top10.forEach(([nume, puncte], index) => {
-        // calculează vbucks proporțional
         const vbucksProportional = Math.round((puncte / totalPuncte) * totalVbucks);
 
-        // găsește cea mai apropiată valoare permisă
-        const vbucksFinal = valoriPermise.reduce((prev, curr) => {
-            return Math.abs(curr - vbucksProportional) < Math.abs(prev - vbucksProportional) ? curr : prev;
-        });
+        const vbucksFinal = valoriPermise.reduce((prev, curr) =>
+            Math.abs(curr - vbucksProportional) < Math.abs(prev - vbucksProportional) ? curr : prev
+        );
 
-        const vbucksImg = `<img src="https://static.wikia.nocookie.net/fortnite/images/e/eb/V-Bucks_-_Icon_-_Fortnite.png" alt="V-Bucks" style="width:22px; height:22px; vertical-align:middle; margin-left:6px;">`;
-
-        let emoji = "⭐";
-        if (index === 0) emoji = "🥇";
-        else if (index === 1) emoji = "🥈";
-        else if (index === 2) emoji = "🥉";
+        const vbucksImg = `<img src="${VBUCKS_ICON_URL}" alt="V-Bucks" style="width:22px; height:22px; vertical-align:middle; margin-left:6px;">`;
 
         const li = document.createElement("li");
         li.innerHTML = `
-            <span>${String(index + 1).padStart(2, '0')}</span>
-            <div class="info">
-                <img src="assets/images/avatar-01.jpg" alt="">
-                <h6><i class="fa fa-check"></i> ${nume}</h6>
-            </div>
-            <div class="points">${vbucksFinal} ${vbucksImg}</div>
-        `;
-        lista.appendChild(li);
+      <span>${String(index + 1).padStart(2, "0")}</span>
+      <div class="info">
+        <img src="${AVATAR_SRC}" alt="">
+        <h6><i class="fa fa-check"></i> ${nume}</h6>
+      </div>
+      <div class="points">${vbucksFinal} ${vbucksImg}</div>
+    `;
+        frag.appendChild(li);
     });
+
+    lista.appendChild(frag);
 }
 
 // 🔷 Citește din Firebase și populează taburile
@@ -120,7 +132,10 @@ onValue(istoricRef, (snapshot) => {
     const data = snapshot.val();
     if (!data) return;
 
-    afiseazaTop('lista-all', calculeazaScoruri(data));            // All-Time ⭐
-    afiseazaTop('lista-90', calculeazaScoruri(data, 90));        // Ultimele 3 luni ⭐
-    afiseazaTopVbucks('lista-vbucks', calculeazaScoruri(data, 90)); // V-Bucks 💎
+    const allTime = calculeazaScoruri(data);
+    const last6Months = calculeazaScoruri(data, 6);
+
+    afiseazaTop("lista-all", allTime);
+    afiseazaTop("lista-90", last6Months);
+    afiseazaTopVbucks("lista-vbucks", last6Months);
 });

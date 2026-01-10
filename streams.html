@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -14,16 +13,13 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-
   <!-- Additional CSS Files -->
   <link rel="stylesheet" href="assets/css/fontawesome.css">
   <link rel="stylesheet" href="assets/css/templatemo-cyborg-gaming.css">
   <link rel="stylesheet" href="assets/css/owl.css">
   <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
-  <script src="database.js"></script>
+
   <style>
     .tab-button {
       background: linear-gradient(145deg, #ffffff, #e0e0e0);
@@ -51,13 +47,6 @@
       box-shadow: 0 6px 18px rgba(25, 118, 210, 0.4);
     }
   </style>
-  <!--
-
-TemplateMo 579 Cyborg Gaming
-
-https://templatemo.com/tm-579-cyborg-gaming
-
--->
 </head>
 
 <body>
@@ -111,42 +100,24 @@ https://templatemo.com/tm-579-cyborg-gaming
         <div class="page-content">
           <div class="top-supporters">
             <h3 style="text-align:center;">🏆 Top Susținători 🎮</h3>
-            <script type="module" src="database.js"></script>
-
-            <script>
-              function activateTab(el, tabId) {
-                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('[id^="tab-"]').forEach(tab => tab.style.display = 'none');
-
-                el.classList.add('active');
-                document.getElementById(tabId).style.display = 'block';
-              }
-
-              window.onload = () => {
-                activateTab(document.querySelector('.tab-button'), 'tab-all');
-              };
-            </script>
 
             <div class="text-center mb-4">
               <button class="tab-button" onclick="activateTab(this, 'tab-all')">📊 All-Time</button>
-              <button class="tab-button" onclick="activateTab(this, 'tab-90')">📆 Ultimele 3 luni</button>
-              <button class="tab-button" onclick="activateTab(this, 'tab-vbucks')">💎 V-Bucks (3 luni)</button>
+              <button class="tab-button" onclick="activateTab(this, 'tab-90')">📆 Ultimele 6 luni</button>
+              <button class="tab-button" onclick="activateTab(this, 'tab-vbucks')">💎 V-Bucks (100 $)</button>
             </div>
 
             <div id="tab-all">
               <ul id="lista-all"></ul>
             </div>
 
-            <div id="tab-90">
+            <div id="tab-90" style="display:none;">
               <ul id="lista-90"></ul>
             </div>
 
-            <div id="tab-vbucks">
+            <div id="tab-vbucks" style="display:none;">
               <ul id="lista-vbucks"></ul>
             </div>
-
-
-            <!-- ***** Featured Games End ***** -->
 
             <!-- ***** Live Stream Start ***** -->
             <div class="live-stream">
@@ -155,6 +126,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                   <h4><em>Most Popular</em> Live Stream</h4>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-lg-3 col-sm-6">
                   <div class="item">
@@ -162,9 +134,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                       <img src="assets/images/stream-05.jpg" alt="">
                       <div class="hover-effect">
                         <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
+                          <div class="live"><a href="#">Live</a></div>
                           <ul>
                             <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
                             <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
@@ -182,15 +152,14 @@ https://templatemo.com/tm-579-cyborg-gaming
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-3 col-sm-6">
                   <div class="item">
                     <div class="thumb">
                       <img src="assets/images/stream-06.jpg" alt="">
                       <div class="hover-effect">
                         <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
+                          <div class="live"><a href="#">Live</a></div>
                           <ul>
                             <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
                             <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
@@ -208,15 +177,14 @@ https://templatemo.com/tm-579-cyborg-gaming
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-3 col-sm-6">
                   <div class="item">
                     <div class="thumb">
                       <img src="assets/images/stream-07.jpg" alt="">
                       <div class="hover-effect">
                         <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
+                          <div class="live"><a href="#">Live</a></div>
                           <ul>
                             <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
                             <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
@@ -234,15 +202,14 @@ https://templatemo.com/tm-579-cyborg-gaming
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-3 col-sm-6">
                   <div class="item">
                     <div class="thumb">
                       <img src="assets/images/stream-08.jpg" alt="">
                       <div class="hover-effect">
                         <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
+                          <div class="live"><a href="#">Live</a></div>
                           <ul>
                             <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
                             <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
@@ -260,110 +227,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                  <div class="item">
-                    <div class="thumb">
-                      <img src="assets/images/stream-07.jpg" alt="">
-                      <div class="hover-effect">
-                        <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
-                          <ul>
-                            <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
-                            <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="down-content">
-                      <div class="avatar">
-                        <img src="assets/images/avatar-01.jpg" alt=""
-                          style="max-width: 46px; border-radius: 50%; float: left;">
-                      </div>
-                      <span><i class="fa fa-check"></i> Kengan Omeg</span>
-                      <h4>Just Talking With Fans</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                  <div class="item">
-                    <div class="thumb">
-                      <img src="assets/images/stream-08.jpg" alt="">
-                      <div class="hover-effect">
-                        <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
-                          <ul>
-                            <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
-                            <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="down-content">
-                      <div class="avatar">
-                        <img src="assets/images/avatar-02.jpg" alt=""
-                          style="max-width: 46px; border-radius: 50%; float: left;">
-                      </div>
-                      <span><i class="fa fa-check"></i> LahutaMalc</span>
-                      <h4>CS-GO 36 Hours Live Stream</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                  <div class="item">
-                    <div class="thumb">
-                      <img src="assets/images/stream-05.jpg" alt="">
-                      <div class="hover-effect">
-                        <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
-                          <ul>
-                            <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
-                            <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="down-content">
-                      <div class="avatar">
-                        <img src="assets/images/avatar-03.jpg" alt=""
-                          style="max-width: 46px; border-radius: 50%; float: left;">
-                      </div>
-                      <span><i class="fa fa-check"></i> Areluwa</span>
-                      <h4>Maybe Nathej Allnight Chillin'</h4>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                  <div class="item">
-                    <div class="thumb">
-                      <img src="assets/images/stream-06.jpg" alt="">
-                      <div class="hover-effect">
-                        <div class="content">
-                          <div class="live">
-                            <a href="#">Live</a>
-                          </div>
-                          <ul>
-                            <li><a href="#"><i class="fa fa-eye"></i> 1.2K</a></li>
-                            <li><a href="#"><i class="fa fa-gamepad"></i> CS-GO</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="down-content">
-                      <div class="avatar">
-                        <img src="assets/images/avatar-04.jpg" alt=""
-                          style="max-width: 46px; border-radius: 50%; float: left;">
-                      </div>
-                      <span><i class="fa fa-check"></i> NewGangTeam</span>
-                      <h4>Live Streaming Till Morning</h4>
-                    </div>
-                  </div>
-                </div>
+
                 <div class="col-lg-12">
                   <div class="main-button">
                     <a href="streams.html">Load More Streams</a>
@@ -383,7 +247,6 @@ https://templatemo.com/tm-579-cyborg-gaming
         <div class="row">
           <div class="col-lg-12">
             <p>Copyright © 2036 <a href="#">Cyborg Gaming</a> Company. All rights reserved.
-
               <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>
             </p>
           </div>
@@ -391,10 +254,7 @@ https://templatemo.com/tm-579-cyborg-gaming
       </div>
     </footer>
 
-
     <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
@@ -404,31 +264,29 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script src="assets/js/popup.js"></script>
     <script src="assets/js/custom.js"></script>
 
+    <!-- Tabs: o singură implementare, fără dubluri -->
     <script>
-      function showTab(tabId) {
-        const tabs = ['tab-all', 'tab-90', 'tab-vbucks'];
-        tabs.forEach(id => {
-          const tab = document.getElementById(id);
-          if (tab) {
-            tab.style.display = id === tabId ? 'block' : 'none';
-          }
+      (function () {
+        const TAB_IDS = ['tab-all', 'tab-90', 'tab-vbucks'];
+
+        window.activateTab = function (button, tabId) {
+          document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+          TAB_IDS.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = (id === tabId) ? 'block' : 'none';
+          });
+          if (button) button.classList.add('active');
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+          const firstBtn = document.querySelector('.tab-button');
+          if (firstBtn) window.activateTab(firstBtn, 'tab-all');
         });
-      }
-
-      function activateTab(button, tabId) {
-        // Scoate clasa active de la toate
-        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-        // Pune clasa pe cel activ
-        button.classList.add('active');
-        // Afișează tabul
-        showTab(tabId);
-      }
-
-      window.onload = () => {
-        const first = document.querySelector('.tab-button');
-        if (first) first.click(); // activează primul
-      };
+      })();
     </script>
+
+    <!-- Firebase logic (ES module) -->
+    <script type="module" src="database.js"></script>
 </body>
 
 </html>
